@@ -1,23 +1,6 @@
-/**
-	This file is part of adapt-through.
-
-    Adapt-through is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Adapt-through is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Adapt-through.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 package br.com.ziben.model;
 
-// Generated Oct 30, 2013 12:33:40 PM by Hibernate Tools 4.0.0
+// Generated Oct 30, 2013 4:54:18 PM by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -31,7 +14,7 @@ public class TbAnaliseCreditoFnclId implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2857393946673907283L;
+	private static final long serialVersionUID = -1622648418744789141L;
 	
 	private short codfil;
 	private int idanalise;
@@ -46,7 +29,7 @@ public class TbAnaliseCreditoFnclId implements java.io.Serializable {
 		this.idproduto = idproduto;
 	}
 
-	@Column(name = "codfil", nullable = false, precision = 3, scale = 0)
+	@Column(name = "CODFIL", nullable = false, precision = 3, scale = 0)
 	public short getCodfil() {
 		return this.codfil;
 	}
@@ -55,7 +38,7 @@ public class TbAnaliseCreditoFnclId implements java.io.Serializable {
 		this.codfil = codfil;
 	}
 
-	@Column(name = "idanalise", nullable = false, precision = 9, scale = 0)
+	@Column(name = "IDANALISE", nullable = false, precision = 9, scale = 0)
 	public int getIdanalise() {
 		return this.idanalise;
 	}
@@ -64,7 +47,7 @@ public class TbAnaliseCreditoFnclId implements java.io.Serializable {
 		this.idanalise = idanalise;
 	}
 
-	@Column(name = "idproduto", nullable = false, precision = 3, scale = 0)
+	@Column(name = "IDPRODUTO", nullable = false, precision = 3, scale = 0)
 	public short getIdproduto() {
 		return this.idproduto;
 	}

@@ -1,22 +1,6 @@
-/**
-	This file is part of adapt-through.
-
-    Adapt-through is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Adapt-through is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Adapt-through.  If not, see <http://www.gnu.org/licenses/>.
-*/
 package br.com.ziben.model;
 
-// Generated Oct 30, 2013 12:33:40 PM by Hibernate Tools 4.0.0
+// Generated Oct 30, 2013 4:54:18 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +15,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2854776311363913567L;
+	private static final long serialVersionUID = 8956007082089169444L;
 	
 	private Short codfil;
 	private Integer idanalise;
@@ -57,7 +41,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.mensagem2 = mensagem2;
 	}
 
-	@Column(name = "codfil", precision = 3, scale = 0)
+	@Column(name = "CODFIL", precision = 3, scale = 0)
 	public Short getCodfil() {
 		return this.codfil;
 	}
@@ -66,7 +50,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.codfil = codfil;
 	}
 
-	@Column(name = "idanalise", precision = 9, scale = 0)
+	@Column(name = "IDANALISE", precision = 9, scale = 0)
 	public Integer getIdanalise() {
 		return this.idanalise;
 	}
@@ -75,7 +59,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.idanalise = idanalise;
 	}
 
-	@Column(name = "dtultmov", length = 29)
+	@Column(name = "DTULTMOV", length = 23)
 	public Date getDtultmov() {
 		return this.dtultmov;
 	}
@@ -84,7 +68,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.dtultmov = dtultmov;
 	}
 
-	@Column(name = "hrultmov", length = 29)
+	@Column(name = "HRULTMOV", length = 23)
 	public Date getHrultmov() {
 		return this.hrultmov;
 	}
@@ -93,7 +77,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.hrultmov = hrultmov;
 	}
 
-	@Column(name = "credit_application_cod", length = 15)
+	@Column(name = "CREDIT_APPLICATION_COD", length = 15)
 	public String getCreditApplicationCod() {
 		return this.creditApplicationCod;
 	}
@@ -102,7 +86,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.creditApplicationCod = creditApplicationCod;
 	}
 
-	@Column(name = "xmllog", length = 2000)
+	@Column(name = "XMLLOG", length = 2000)
 	public String getXmllog() {
 		return this.xmllog;
 	}
@@ -111,7 +95,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.xmllog = xmllog;
 	}
 
-	@Column(name = "mensagem1", length = 300)
+	@Column(name = "MENSAGEM1", length = 300)
 	public String getMensagem1() {
 		return this.mensagem1;
 	}
@@ -120,7 +104,7 @@ public class TbAnaliseCreditoComplFnclId implements java.io.Serializable {
 		this.mensagem1 = mensagem1;
 	}
 
-	@Column(name = "mensagem2", length = 300)
+	@Column(name = "MENSAGEM2", length = 300)
 	public String getMensagem2() {
 		return this.mensagem2;
 	}

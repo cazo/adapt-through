@@ -22,7 +22,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>br.com.totvs.main.DummyApp</mainClass>
+							<mainClass>br.com.ziben.main.DummyApp</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
@@ -107,6 +107,16 @@
 			<groupId>jboss</groupId>
 			<artifactId>jboss-ejb3x</artifactId>
 			<version>4.2.2.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2.7</version>
 		</dependency>
 	</dependencies>
 </project>

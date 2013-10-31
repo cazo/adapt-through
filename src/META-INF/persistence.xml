@@ -1,0 +1,14 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="intellectorPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<!-- Provider class name is required in Java SE -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<!-- All persistence classes must be listed -->
+		<class>br.com.ziben.model.TbAnaliseCreditoFncl</class>
+		<class>br.com.ziben.model.TbAnaliseCreditoComplFncl</class>
+				
+		<properties>
+		<!-- NOTHING NEEDED HERE... -->
+		</properties>
+	</persistence-unit>
+</persistence>

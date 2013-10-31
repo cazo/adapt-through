@@ -1,3 +1,20 @@
+/**
+	This file is part of adapt-through.
+
+    Adapt-through is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Adapt-through is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Adapt-through.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package br.com.ziben.main;
 
 import java.io.FileInputStream;
@@ -11,17 +28,29 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.apache.log4j.Logger;
+import javax.persistence.EntityManager;
 
-public class DummyApp {
+import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
+
+import br.com.ziben.model.ConnectionManager;
+import br.com.ziben.model.TbAnaliseCreditoFncl;
+import br.com.ziben.model.TbAnaliseCreditoFnclHome;
+
+public class AdaptThroughApp {
 
 	private String event;
+	private int numThreads;
 	private Logger log = Logger.getLogger(this.getClass().getName());
 
 	private boolean execute() {
 		boolean result = true;
 
-		int numThreads = Integer.parseInt(System.getProperty("numThreads"));
+		numThreads = Integer.parseInt(System.getProperty("numThreads"));
 
 		HashMap<Integer, RetailProposalRegisterClient> executed = new HashMap<Integer, RetailProposalRegisterClient>();
 
@@ -31,6 +60,10 @@ public class DummyApp {
 
 			// lista com os futuros das execuções
 			List<Future<?>> futures = new ArrayList<Future<?>>();
+
+			// vou no banco buscar as propostas a serem processadas
+			ArrayList<TbAnaliseCreditoFncl> proposalList = getProposalsForProcessing();
+			markAsBeeingProcessed(proposalList);
 
 			// loop que cria as threads de execução
 			for (int i = 1; i <= numThreads; i++) {
@@ -46,7 +79,6 @@ public class DummyApp {
 			// espero todas as threads me enviarem o retorno...
 			for (Future<?> f : futures) {
 				f.get();
-				log.info(".");
 			}
 
 			// desligo a pool de threads e continuo com o resto do aplicativo...
@@ -92,10 +124,68 @@ public class DummyApp {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	private ArrayList<TbAnaliseCreditoFncl> getProposalsForProcessing() {
+
+		log.debug(">> AdaptThroughApp.getProposalsForProcessing()");
+
+		List<TbAnaliseCreditoFncl> list = null;
+
+		try {
+			Session session = (Session) ConnectionManager.getEntityManager().getDelegate();
+			Criteria criteria = session.createCriteria(TbAnaliseCreditoFncl.class);
+			criteria.add(Restrictions.isNull("status"));
+			criteria.addOrder(Order.asc("dtinclusao"));
+			criteria.addOrder(Order.asc("hrinclusao"));
+			criteria.setMaxResults(numThreads);
+			// faz consulta com os criterios
+			list = criteria.list();
+		} catch (Exception e) {
+			log.error("Erro ao buscar as propostas na base:", e);
+		} finally {
+			log.debug(">> AdaptThroughApp.getProposalsForProcessing()");
+		}
+
+		return new ArrayList<TbAnaliseCreditoFncl>(list);
+	}
+
+	private void markAsBeeingProcessed(ArrayList<TbAnaliseCreditoFncl> proposals) {
+
+		log.debug(">> AdaptThroughApp.markAsBeeingProcessed()");
+
+		EntityManager entityManager = null;
+
+		try {
+			entityManager = ConnectionManager.getEntityManager();
+			entityManager.getTransaction().begin();
+
+			for (TbAnaliseCreditoFncl tbAnaliseCreditoFncl : proposals) {
+				TbAnaliseCreditoFnclHome tbAnaliseCreditoFnclDao = new TbAnaliseCreditoFnclHome(entityManager);
+				tbAnaliseCreditoFncl.setStatus((short) 3);
+				DateTime dtAnalise = new DateTime();
+				dtAnalise.withTime(0, 0, 0, 0);
+				tbAnaliseCreditoFncl.setDtanalise(dtAnalise.toDate());
+				DateTime hrAnalise = new DateTime();
+				hrAnalise.withDate(1900, 1, 1);
+				tbAnaliseCreditoFncl.setHranalise(new Date());
+				tbAnaliseCreditoFnclDao.persist(tbAnaliseCreditoFncl);
+			}
+
+			entityManager.getTransaction().commit();
+
+		} catch (Exception e) {
+			log.error("Erro ao pegar a mensagem: ", e);
+		} finally {
+			if (entityManager.getTransaction().isActive())
+				entityManager.getTransaction().rollback();
+			log.debug("<< AdaptThroughApp.markAsBeeingProcessed()");
+		}
+	}
+
 	public static void main(String args[]) {
 		int returnCod = 0;
 		long startTime = (new Date()).getTime();
-		Logger logger = Logger.getLogger(DummyApp.class);
+		Logger logger = Logger.getLogger(AdaptThroughApp.class);
 		try {
 			if (System.getProperty("user.properties") != null) {
 				Properties props = System.getProperties();
@@ -109,7 +199,7 @@ public class DummyApp {
 			}
 
 			logger.info("Inicio do processo...");
-			DummyApp env = new DummyApp();
+			AdaptThroughApp env = new AdaptThroughApp();
 			env.event = "AnaliseCredito";
 			env.execute();
 		} catch (Exception e) {
