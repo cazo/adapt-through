@@ -20,6 +20,7 @@ package br.com.ziben.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -36,19 +37,20 @@ import org.apache.log4j.Logger;
  * 
  */
 public class ConnectionManager {
-	private static EntityManagerFactory emf;
+	
+	private static HashMap<String, EntityManagerFactory> emfMap;
 
 	/**
 	 * Inicializa as configurações estaticas do Connection Manager
 	 * 
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void initEntityManager() {
+	public static void initEntityManager(String key) {
 		Logger logger = Logger.getLogger(ConnectionManager.class.getName());
 		logger.debug(">>Configuration()");
 
-		String nomeArquivo = System.getProperty("persistence.configuration");
-		if (nomeArquivo == null) {
+		String nomeArquivo = "./" + System.getProperty(key);
+		if (nomeArquivo == null || nomeArquivo.equals("./")) {
 			nomeArquivo = "./" + "hibernate.properties";
 			logger.info("Setando arquivo de configuracoes " + nomeArquivo);
 		}
@@ -68,7 +70,7 @@ public class ConnectionManager {
 			// O Persistencce Unit deve ser colocado na propriedade "persistence.unit.name" no arquivo de propriedades configurado no "persistence.configuration".
 			// Isso é feito assim para que essa classe possa ser reutilizada por todos os projetos que utilizem Hibernate de forma simples, sem precisar reescrever ou
 			// sobrescrever nenhuma parte do código.
-			emf = Persistence.createEntityManagerFactory(properties.getProperty("persistence.unit.name"), (Map) properties);
+			emfMap.put(key, Persistence.createEntityManagerFactory(properties.getProperty("persistence.unit.name"), (Map) properties));
 
 		} catch (Exception e) {
 			logger.error(">> Erro ao configurar o Entity Manager: ", e);
@@ -84,11 +86,15 @@ public class ConnectionManager {
 	 * 
 	 * @return EntityManager para o hibernate
 	 */
-	public static EntityManager getEntityManager() {
+	public static EntityManager getEntityManager(String factoryName) {
 		// Garanto que o entityManager já está instanciado antes de retornar...
-		if (emf == null) {
-			initEntityManager();
+		if (emfMap == null) {
+			emfMap = new HashMap<String, EntityManagerFactory>();
 		}
-		return emf.createEntityManager();
+		
+		if (emfMap.get(factoryName) == null) {
+			initEntityManager(factoryName);
+		}
+		return emfMap.get(factoryName).createEntityManager();
 	}
 }

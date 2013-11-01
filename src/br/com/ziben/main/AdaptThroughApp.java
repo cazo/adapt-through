@@ -40,6 +40,7 @@ import org.joda.time.DateTime;
 import br.com.ziben.model.ConnectionManager;
 import br.com.ziben.model.TbAnaliseCreditoFncl;
 import br.com.ziben.model.TbAnaliseCreditoFnclHome;
+import br.com.ziben.services.client.RetailProposalRegisterClient;
 
 public class AdaptThroughApp {
 
@@ -132,7 +133,7 @@ public class AdaptThroughApp {
 		List<TbAnaliseCreditoFncl> list = null;
 
 		try {
-			Session session = (Session) ConnectionManager.getEntityManager().getDelegate();
+			Session session = (Session) ConnectionManager.getEntityManager("database.property.dbzema.name").getDelegate();
 			Criteria criteria = session.createCriteria(TbAnaliseCreditoFncl.class);
 			criteria.add(Restrictions.isNull("status"));
 			criteria.addOrder(Order.asc("dtinclusao"));
@@ -156,7 +157,7 @@ public class AdaptThroughApp {
 		EntityManager entityManager = null;
 
 		try {
-			entityManager = ConnectionManager.getEntityManager();
+			entityManager = ConnectionManager.getEntityManager("database.property.dbzema.name");
 			entityManager.getTransaction().begin();
 
 			for (TbAnaliseCreditoFncl tbAnaliseCreditoFncl : proposals) {
