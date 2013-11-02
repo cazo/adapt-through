@@ -13,7 +13,7 @@
 
     You should have received a copy of the GNU General Public License
     along with Adapt-through.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package br.com.ziben.model;
 
@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  * 
  */
 public class ConnectionManager {
-	
+
 	private static HashMap<String, EntityManagerFactory> emfMap;
 
 	/**
@@ -45,11 +45,11 @@ public class ConnectionManager {
 	 * 
 	 */
 	@SuppressWarnings("rawtypes")
-	public static void initEntityManager(String key) {
+	public static void initEntityManager(String factoryName) {
 		Logger logger = Logger.getLogger(ConnectionManager.class.getName());
 		logger.debug(">>Configuration()");
 
-		String nomeArquivo = "./" + System.getProperty(key);
+		String nomeArquivo = "./" + System.getProperty(factoryName) + ".properties";
 		if (nomeArquivo == null || nomeArquivo.equals("./")) {
 			nomeArquivo = "./" + "hibernate.properties";
 			logger.info("Setando arquivo de configuracoes " + nomeArquivo);
@@ -70,7 +70,7 @@ public class ConnectionManager {
 			// O Persistencce Unit deve ser colocado na propriedade "persistence.unit.name" no arquivo de propriedades configurado no "persistence.configuration".
 			// Isso é feito assim para que essa classe possa ser reutilizada por todos os projetos que utilizem Hibernate de forma simples, sem precisar reescrever ou
 			// sobrescrever nenhuma parte do código.
-			emfMap.put(key, Persistence.createEntityManagerFactory(properties.getProperty("persistence.unit.name"), (Map) properties));
+			emfMap.put(factoryName, Persistence.createEntityManagerFactory(properties.getProperty("persistence.unit.name"), (Map) properties));
 
 		} catch (Exception e) {
 			logger.error(">> Erro ao configurar o Entity Manager: ", e);
@@ -91,7 +91,7 @@ public class ConnectionManager {
 		if (emfMap == null) {
 			emfMap = new HashMap<String, EntityManagerFactory>();
 		}
-		
+
 		if (emfMap.get(factoryName) == null) {
 			initEntityManager(factoryName);
 		}

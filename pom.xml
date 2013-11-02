@@ -22,7 +22,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>br.com.ziben.main.DummyApp</mainClass>
+							<mainClass>br.com.ziben.test.ConnectTest</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
@@ -43,6 +43,20 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -88,20 +102,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.1.10.Final</version>
-			<scope>provided</scope>
+			<version>4.2.7.SP1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.10.Final</version>
-			<scope>provided</scope>
+			<version>4.2.7.SP1</version>
 		</dependency>
 		<dependency>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<version>1.0.1.Final</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jboss</groupId>

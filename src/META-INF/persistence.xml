@@ -1,15 +1,30 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
-	<persistence-unit name="intellectorPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+	<!-- O Warning acima é idiotice do Eclipse, ele só consegue usar 1 persistence-unit...pode ser ignorado sem problemas -->
+	<persistence-unit name="dbZema" transaction-type="RESOURCE_LOCAL">
 		<!-- Provider class name is required in Java SE -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		
+
 		<!-- All persistence classes must be listed -->
 		<class>br.com.ziben.model.TbAnaliseCreditoFncl</class>
+		<class>br.com.ziben.model.TbAnaliseCreditoFnclId</class>
 		<class>br.com.ziben.model.TbAnaliseCreditoComplFncl</class>
-		<class>br.com.ziben.model.TbEsteiraCredito</class>
-				
+		<class>br.com.ziben.model.TbAnaliseCreditoComplFnclId</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
 		<properties>
-		
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="dbFinancial" transaction-type="RESOURCE_LOCAL">
+		<!-- Provider class name is required in Java SE -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<!-- All persistence classes must be listed -->
+		<class>br.com.ziben.model.TbEsteiraCredito</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+		<properties>
 		</properties>
 	</persistence-unit>
 </persistence>
