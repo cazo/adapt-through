@@ -60,7 +60,7 @@ public class ConnectTest {
 			Session session = (Session) ConnectionManager.getEntityManager("database.property.dbfinancial.name").getDelegate();
 			Criteria criteria = session.createCriteria(TbEsteiraCredito.class);
 			criteria.add(Restrictions.ne("cgccpf", 191L));
-			criteria.setMaxResults(5);
+			criteria.setMaxResults(1);
 			// faz consulta com os criterios
 			listTbEsteira = criteria.list();
 			log.debug("Voltei do select..");
@@ -81,7 +81,7 @@ public class ConnectTest {
 			criteria.add(Restrictions.isNull("status"));
 			criteria.addOrder(Order.asc("dtinclusao"));
 			criteria.addOrder(Order.asc("hrinclusao"));
-			criteria.setMaxResults(5);
+			criteria.setMaxResults(1);
 			// faz consulta com os criterios
 			listTbAnalise = criteria.list();
 			log.debug("Voltei do select..");

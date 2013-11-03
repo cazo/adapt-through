@@ -33,12 +33,13 @@ import org.apache.log4j.Logger;
 /**
  * Classe utilitaria para conexoes a entidades hiberneticas!
  * 
- * @author ccardozo
+ * @author Claudio Cardozo, Frederico Jabulka
  * 
  */
 public class ConnectionManager {
 
 	private static HashMap<String, EntityManagerFactory> emfMap;
+	private static final Object syncObj = new Object();
 
 	/**
 	 * Inicializa as configurações estaticas do Connection Manager
@@ -88,12 +89,15 @@ public class ConnectionManager {
 	 */
 	public static EntityManager getEntityManager(String factoryName) {
 		// Garanto que o entityManager já está instanciado antes de retornar...
-		if (emfMap == null) {
-			emfMap = new HashMap<String, EntityManagerFactory>();
-		}
+		// Aqui eu tenho que estar sincronizado, pode ser um pequeno gargalo na primeira thread que entrar, mas garando que só perco tempo com inicialização uma vez.
+		synchronized (syncObj) {
+			if (emfMap == null) {
+				emfMap = new HashMap<String, EntityManagerFactory>();
+			}
 
-		if (emfMap.get(factoryName) == null) {
-			initEntityManager(factoryName);
+			if (emfMap.get(factoryName) == null) {
+				initEntityManager(factoryName);
+			}
 		}
 		return emfMap.get(factoryName).createEntityManager();
 	}

@@ -3,57 +3,55 @@ package br.com.ziben.services.client.response;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Classe que representa a de-serialização do XML da proposta.
+ * 
+ * @author Frederico Jabulka
+ * 
+ */
 @XStreamAlias("RetailProposalRegister")
 public class RetailProposalRegisterResponse {
 	/**
-	 * @Description Contract (contrato) – string(9) código do contrato.
-	 *              Parâmetro obrigatório
+	 * Contract (contrato) – string(9) código do contrato.
+	 * Parâmetro obrigatório
 	 */
-	private String Contract; // 999999999
+	private String Contract;
 
 	/**
-	 * @Description AnalysisStatus (statusAnalise) – string(1) 0 – Negado, 1 –
-	 *              Aprovado ou 2 – Mesa. Parâmetro obrigatório
+	 * AnalysisStatus (statusAnalise) – string(1) 0 – Negado, 1 – Aprovado ou 2 – Mesa. Parâmetro obrigatório.
 	 */
 	private String AnalysisStatus;
 
 	/**
-	 * @Description AuthorizationCode (codAutorizacao) – string(10) Código de
-	 *              autorização obtido da financeira. Parâmetro opcional pode
-	 *              ser vazio caso o financiamento seja da própria eletrozema)
+	 * AuthorizationCode (codAutorizacao) – string(10) Código de autorização obtido da financeira. Parâmetro opcional pode ser vazio caso o financiamento seja da própria
+	 * eletrozema.
 	 */
 	private String AuthorizationCode;
 
 	/**
-	 * @Description OrderNumber (numeroPedido) – string(10) identificador do
-	 *              orçamento no Protheus. Parâmetro obrigatório
+	 * OrderNumber (numeroPedido) – string(10) identificador do orçamento. Parâmetro obrigatório.
 	 */
 	private String OrderNumber;
 
 	/**
-	 * @Description PurchaseAmount (valorCompra) – number(14,5) valor da compra
-	 *              do contrato pela financeira. Se a própria Eletrozema
-	 *              financiar o contrato então será 0.
+	 * PurchaseAmount (valorCompra) – number(14,5) valor da compra do contrato pela financeira. Se a própria Eletrozema financiar o contrato então será 0.
 	 */
 	private String PurchaseAmount;
 
 	/**
-	 * @Description Return (retorno) – string(1) 0 indica erro, 1 sucesso.
-	 *              Parâmetro obrigatório
+	 * Return (retorno) – string(1) 0 indica erro, 1 sucesso. Parâmetro obrigatório.
 	 */
-	private String Return; // 0
+	private String Return;
 
 	/**
-	 * @Description Message1 (mensagem1) – string(255) mensagem real de erro
-	 *              caso ocorra. Parâmetro obrigatório
+	 * Message1 (mensagem1) – string(255) mensagem real de erro caso ocorra. Parâmetro obrigatório.
 	 */
-	private String Message1; // XXXXXXXXX
+	private String Message1;
 
 	/**
-	 * @Description Message2 (mensagem2) – string(255) mensagem amigável para
-	 *              exibição ao usuario. Parâmetro obrigatório
+	 * Message2 (mensagem2) – string(255) mensagem amigável para exibição ao usuario. Parâmetro obrigatório.
 	 */
-	private String Message2; // XXXXXXXXX
+	private String Message2;
 
 	public String getContract() {
 		return Contract;
@@ -120,29 +118,32 @@ public class RetailProposalRegisterResponse {
 	}
 
 	/**
-	 * @param response
-	 * @return String xml
+	 * @param object
+	 *            Objeto a ser serializado
+	 * @return String com o XML representando o objeto serializado.
 	 */
-	public static String objectToXml(RetailProposalRegisterResponse response) {
+	public static String objectToXml(RetailProposalRegisterResponse object) {
 
 		XStream xStream = new XStream();
 
 		xStream.processAnnotations(RetailProposalRegisterResponse.class);
 
-		return xStream.toXML(response);
+		return xStream.toXML(object);
 	}
 
 	/**
-	 * @param response
-	 * @return String xml
+	 * Método para de-serializar um XML.
+	 * 
+	 * @param xmlString
+	 *            String com o XML a ser de-serializado.
+	 * @return Objeto representando o XML de-serializado.
 	 */
-	public static RetailProposalRegisterResponse xmlToObject(String response) {
+	public static RetailProposalRegisterResponse xmlToObject(String xmlString) {
 
 		XStream xStream = new XStream();
 
 		xStream.processAnnotations(RetailProposalRegisterResponse.class);
 
-		return (RetailProposalRegisterResponse) xStream.fromXML(response);
+		return (RetailProposalRegisterResponse) xStream.fromXML(xmlString);
 	}
-
 }

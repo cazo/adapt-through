@@ -1,3 +1,20 @@
+/**
+	This file is part of adapt-through.
+
+    Adapt-through is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Adapt-through is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Adapt-through.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package br.com.ziben.model;
 
 // Generated Nov 1, 2013 12:51:07 PM by Hibernate Tools 4.0.0
@@ -10,6 +27,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Home object for domain model class TbEsteiraCredito.
+ * 
  * @see br.com.ziben.model.TbEsteiraCredito
  * @author Hibernate Tools
  */
@@ -20,6 +38,10 @@ public class TbEsteiraCreditoHome {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	public TbEsteiraCreditoHome(EntityManager em) {
+		entityManager = em;
+	}
 
 	public void persist(TbEsteiraCredito transientInstance) {
 		log.debug("persisting TbEsteiraCredito instance");

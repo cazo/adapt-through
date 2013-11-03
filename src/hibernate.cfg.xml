@@ -4,16 +4,16 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <!-- session-factory>
-        <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
         <property name="hibernate.connection.password">financial2013</property>
-        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://172.30.0.5:1433/DBZEMA</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://172.30.0.5:1433;databaseName=DBZEMA</property>
         <property name="hibernate.connection.username">user_financial</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
     </session-factory -->
     <!-- session-factory>
         <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
         <property name="hibernate.connection.password">toolsscc</property>
-        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://172.30.0.76:1433/FINANCIAL</property>
+        <property name="hibernate.connection.url">jdbc:sqlserver://172.30.0.76:1433;databaseName=FINANCIAL</property>
         <property name="hibernate.connection.username">tools</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
     </session-factory -->
